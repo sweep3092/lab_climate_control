@@ -58,23 +58,20 @@ void loop() {
   delay(200);
 
 
-  if(Serial.avaible() > 0){
+  if (Serial.avaible() > 0) {
     string command = Serial.read();
 
-    if(command == 'up'){
+    if (command == 'up') {
       preset_temp++;
     }
-    else if(command == 'down'){
+    else if (command == 'down') {
       preset_temp--;
     }
-    else if(command == 'cur'){
-      Serial.println("Cur: %dC", round(t));
+    else if (command == 'cur') {
+      Serial.println("%d", round(t));
     }
-    else if(command == 'set'){
-      Serial.println("Set: %dC", preset_temp);
-    }
-    else {
-      
+    else if (command == 'set') {
+      Serial.println("%d", preset_temp);
     }
   }
 
