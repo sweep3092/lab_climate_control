@@ -57,6 +57,28 @@ void loop() {
   
   delay(200);
 
+
+  if(Serial.avaible() > 0){
+    string command = Serial.read();
+
+    if(command == 'up'){
+      preset_temp++;
+    }
+    else if(command == 'down'){
+      preset_temp--;
+    }
+    else if(command == 'cur'){
+      Serial.println("Cur: %dC", round(t));
+    }
+    else if(command == 'set'){
+      Serial.println("Set: %dC", preset_temp);
+    }
+    else {
+      
+    }
+  }
+
+  
   if (digitalRead(TEMPUP) == LOW) {
     preset_temp++;
   }
@@ -98,4 +120,5 @@ void loop() {
     }
     relay_delay = 0;
   }
+  
 }
