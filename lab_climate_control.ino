@@ -51,30 +51,12 @@ void setup() {
   dht.begin();
 }
 
+
 void loop() {
   char lcd_upper[8];
   char lcd_lower[8];
   
-  delay(200);
-
-
-  if (Serial.avaible() > 0) {
-    string command = Serial.read();
-
-    if (command == 'up') {
-      preset_temp++;
-    }
-    else if (command == 'down') {
-      preset_temp--;
-    }
-    else if (command == 'cur') {
-      Serial.println("%d", round(t));
-    }
-    else if (command == 'set') {
-      Serial.println("%d", preset_temp);
-    }
-  }
-
+  delay(200);  
   
   if (digitalRead(TEMPUP) == LOW) {
     preset_temp++;
@@ -87,6 +69,35 @@ void loop() {
   if(isnan(t)){
     Serial.println("Failed to read from DHT sensor!");
     return;
+  }
+
+
+  if (Serial.available() > 0) {
+    int i = Serial.available();
+    String command;
+    int j = 0;
+    while (j < i) {
+        command.concat((char)Serial.read());
+        j++;
+    }
+    
+    //Serial.println(command);
+    
+    if (command.compareTo("up") == 0) {
+       preset_temp++;
+       //Serial.println(1);
+     }
+     else if (command.compareTo("down") == 0) {
+       preset_temp--;
+       //Serial.println(-1);
+     }
+     else if (command.compareTo("cur") == 0) {
+       Serial.println(round(t));
+     }
+     else if (command.compareTo("set") == 0) {
+       Serial.println(preset_temp);
+     }
+   
   }
 
   lcd_clear();
