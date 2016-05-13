@@ -71,33 +71,29 @@ void loop() {
     return;
   }
 
-
-  if (Serial.available() > 0) {
-    int i = Serial.available();
+  int i = Serial.available();
+  if (i > 0) {
     String command;
-    int j = 0;
-    while (j < i) {
-        command.concat((char)Serial.read());
-        j++;
+    for(int j = 0; j < i; j++) {
+      command.concat((char)Serial.read());
     }
     
     //Serial.println(command);
     
     if (command.compareTo("up") == 0) {
-       preset_temp++;
-       //Serial.println(1);
-     }
-     else if (command.compareTo("down") == 0) {
-       preset_temp--;
-       //Serial.println(-1);
-     }
-     else if (command.compareTo("cur") == 0) {
-       Serial.println(round(t));
-     }
-     else if (command.compareTo("set") == 0) {
-       Serial.println(preset_temp);
-     }
-   
+      preset_temp++;
+      //Serial.println(1);
+    }
+    else if (command.compareTo("down") == 0) {
+      preset_temp--;
+      //Serial.println(-1);
+    }
+    else if (command.compareTo("cur") == 0) {
+      Serial.println(round(t));
+    }
+    else if (command.compareTo("set") == 0) {
+      Serial.println(preset_temp);
+    }
   }
 
   lcd_clear();
