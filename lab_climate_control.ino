@@ -71,22 +71,18 @@ void loop() {
     return;
   }
 
-  int i = Serial.available();
-  if (i > 0) {
+  int serial_input = Serial.available();
+  if (serial_input > 0) {
     String command;
-    for(int j = 0; j < i; j++) {
+    for(int i = 0; i < serial_input; i++) {
       command.concat((char)Serial.read());
     }
     
-    //Serial.println(command);
-    
     if (command.compareTo("up") == 0) {
       preset_temp++;
-      //Serial.println(1);
     }
     else if (command.compareTo("down") == 0) {
       preset_temp--;
-      //Serial.println(-1);
     }
     else if (command.compareTo("cur") == 0) {
       Serial.println(round(t));
@@ -108,19 +104,16 @@ void loop() {
   if (relay_delay > 65534) {
    relay_delay = 300;
   }
-  
-//  Serial.println(relay_delay);
+
   
   if (relay_delay > 300) {
     if (round(t) > preset_temp) {
       // スイッチオン！
       digitalWrite(RELAY, HIGH);
-//      Serial.println("HIGH");
     }
     else {
       // スイッチオフ！
       digitalWrite(RELAY, LOW);
-//      Serial.println("LOW");
     }
     relay_delay = 0;
   }
